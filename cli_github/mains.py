@@ -15,11 +15,32 @@ import urllib.request
 import base64
 import dateutil.parser
 from prettytable import PrettyTable
+from requests import get
 
 GITHUB_API = 'https://api.github.com/'
+GITHUB_JOBS = 'https://jobs.github.com/positions.json'
 
 API_TOKEN = os.environ.get('GITHUB_TOKEN')
 
+
+def show_job(job=None, location=None):
+    fields = ["Company", "Title", "Company"]
+    table = PrettyTable(["Url", "Title", "Company"])
+    table.padding_width = 1
+    table.vertical_char = '.'
+    table.column_width = 20
+    data = {'description': job, 'location': location}
+    for i in fields:
+        table.align[i] = "c"
+    try:
+        print("Fetching data..\n")
+        jsondata = get(GITHUB_JOBS, data).text
+        jsondata = json.loads(jsondata)
+        for i in jsondata:
+            table.add_row([i['company_url'], i['title'], i['company']])
+        print(table)
+    except Exception as e:
+        print("Error happened "+e)
 # MAIN
 
 
@@ -33,7 +54,8 @@ def main():
     group.add_argument('-r', '--recursive', type=str,
                        help="Get the file structure from the repo link")
     group.add_argument('-R', '--readme', type=str,
-                       help="Get the raw version of the repo readme from repo link")
+                       help="Get the raw version of the repo\
+                        readme from repo link")
     group.add_argument('-re', '--releases', type=str,
                        help="Get the list of releases from repo link")
     group.add_argument('-dt', '--tarball', type=str,
@@ -42,8 +64,11 @@ def main():
                        help="Download the zipball of the given repo")
     group.add_argument('-op', '--openfile', type=str,
                        help="Show the contents of the given file in a repo")
-    group.add_argument('-f','--followers',type=str,
+    group.add_argument('-f', '--followers', type=str,
                        help="Get followers of the user")
+    group.add_argument('-j', '--jobs', type=str,
+                       help="Get available jobs in programming\
+                        language of your choice")
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -117,13 +142,11 @@ def main():
         urllib.request.urlretrieve(response_url, name)
         print(name + ' has been saved\n')
         return
-    
 # FOLLOWERS
 
     if args.followers:
         name = url_parse(args.followers)
         url = GITHUB_API + 'users/' + name + '/followers'
-        
 # OTHER OPTIONS
 
     response = get_req(url)
@@ -191,3 +214,6 @@ def main():
             table.add_row([i['login']])
         print("Number of followers:"+str(len(jsondata)))
         print(table)
+
+    if args.jobs:
+        show_job(args.job)
