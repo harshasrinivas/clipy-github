@@ -69,6 +69,8 @@
                     Show the contents of the given file in a repo
 -f FOLLOWERS, --followers FOLLOWERS
                     Get followers of the user
+-j LANGUAGE, --jobs LANGUAGE
+			Get available jobs in programming language of your choice
 ```
 
 
@@ -107,6 +109,9 @@ Get the list of followers of the user
 
 `$ cli-github -f harshasrinivas`
 
+Get the list of available Jobs in your desired Programming language
+`$ cli-github -j Python`
+
 #Live Demo
 
 [**DEMO**](http://showterm.io/aaa79dee63aad0695e304#fast) : Display the list of a user's repositories from the username/URL, along with the number of stargazers
@@ -135,6 +140,7 @@ If you want to add features, improve them, or report issues, feel free to send a
 * [sananth12](https://github.com/sananth12)
 * [SanketDG](https://github.com/SanketDG)
 * [Pratik151](https://github.com/Pratik151)
+* [Tushar](https://github.com/tushar-rishav)
 
 #License
 
