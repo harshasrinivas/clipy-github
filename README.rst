@@ -132,6 +132,8 @@ Options
                         Show the contents of the given file in a repo
     -f FOLLOWERS, --followers FOLLOWERS
                         Get followers of the user
+    -j LANGUAGE, --jobs LANGUAGE
+                        Get available jobs in programming language of your choice
 
 Usage
 =====
@@ -186,6 +188,12 @@ List the followers of a user
    
    $ cli-github -f harshasrinivas
 
+Get the list of available Jobs in your desired Programming language
+
+.. code:: sh
+   
+   $ cli-github -j Python
+
 
 Contribute
 ==========
@@ -200,6 +208,7 @@ Contributors
 - `sananth12 <https://github.com/sananth12>`__
 - `SanketDG <https://github.com/SanketDG>`__
 - `Pratik151 <https://github.com/Pratik151>`__
+- `Tushar <https://github.com/tushar-rishav>`__
 
 .. |Build Status| image:: https://travis-ci.org/harshasrinivas/cli-github.svg?branch=master
       :target: https://travis-ci.org/harshasrinivas/cli-github

@@ -110,6 +110,7 @@ Get the list of followers of the user
 `$ cli-github -f harshasrinivas`
 
 Get the list of available Jobs in your desired Programming language
+
 `$ cli-github -j Python`
 
 #Live Demo
