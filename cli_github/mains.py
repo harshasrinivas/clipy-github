@@ -6,7 +6,7 @@ from __future__ import absolute_import
 from future.standard_library import install_aliases
 install_aliases()
 
-from .utils import url_parse, get_req, geturl_req
+from .utils import url_parse, get_req, geturl_req,show_job
 import os
 import sys
 import argparse
@@ -15,32 +15,11 @@ import urllib.request
 import base64
 import dateutil.parser
 from prettytable import PrettyTable
-from requests import get
 
 GITHUB_API = 'https://api.github.com/'
-GITHUB_JOBS = 'https://jobs.github.com/positions.json'
 
 API_TOKEN = os.environ.get('GITHUB_TOKEN')
 
-
-def show_job(job=None, location=None):
-    fields = ["Company", "Title", "Company"]
-    table = PrettyTable(["Url", "Title", "Company"])
-    table.padding_width = 1
-    table.vertical_char = '.'
-    table.column_width = 20
-    data = {'description': job, 'location': location}
-    for i in fields:
-        table.align[i] = "c"
-    try:
-        print("Fetching data..\n")
-        jsondata = get(GITHUB_JOBS, data).text
-        jsondata = json.loads(jsondata)
-        for i in jsondata:
-            table.add_row([i['company_url'], i['title'], i['company']])
-        print(table)
-    except Exception as e:
-        print("Error happened "+e)
 # MAIN
 
 
