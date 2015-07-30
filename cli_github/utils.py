@@ -9,9 +9,11 @@ install_aliases()
 import os
 import sys
 import urllib.request
+import json
+from prettytable import PrettyTable
 
 GITHUB_API = 'https://api.github.com/'
-
+GITHUB_JOBS = 'https://jobs.github.com/positions.json'
 API_TOKEN = os.environ.get('GITHUB_TOKEN')
 
 # UTILITY FUNCTIONS
@@ -74,3 +76,27 @@ def geturl_req(url):
     except urllib.error.HTTPError:
         exception()
         sys.exit(0)
+
+# FETCH JOBS
+
+def show_job(job=None, location=None):
+    fields = ["Company", "Title", "Company"]
+    table = PrettyTable(["Url", "Title", "Company"])
+    table.padding_width = 1
+    table.vertical_char = '.'
+    table.column_width = 20
+    if job:
+        url=GITHUB_JOBS+"?description="+job
+    else:
+        url=GITHUB_JOBS
+    for i in fields:
+        table.align[i] = "c"
+    try:
+        print("Fetching data..\n")
+        jsondata = urllib.request.urlopen(url).read().decode('utf-8')
+        jsondata=json.loads(jsondata)
+        for i in jsondata:
+            table.add_row([i['company_url'], i['title'], i['company']])
+        print(table)
+    except Exception as e:
+        print(e)
